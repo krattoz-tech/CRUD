@@ -32,21 +32,21 @@ class ProductoService:
                         )
                         self.productos.append(producto)
                 
-                print(f"✅ Datos cargados desde {self.archivo_datos}")
+                print(f"[OK] Datos cargados desde {self.archivo_datos}")
             else:
                 # Si no existe el archivo, crear productos de ejemplo
                 self._agregar_productos_ejemplo()
                 self._guardar_datos()  # Guardar los productos de ejemplo
-                print(f"📁 Archivo {self.archivo_datos} creado con productos de ejemplo")
+                print(f"[NUEVO] Archivo {self.archivo_datos} creado con productos de ejemplo")
                 
         except (json.JSONDecodeError, KeyError, ValueError) as e:
-            print(f"⚠️  Error al cargar datos: {e}. Creando productos de ejemplo...")
+            print(f"[ADVERTENCIA] Error al cargar datos: {e}. Creando productos de ejemplo...")
             self.productos = []
             self.siguiente_id = 1
             self._agregar_productos_ejemplo()
             self._guardar_datos()
         except Exception as e:
-            print(f"❌ Error inesperado al cargar datos: {e}")
+            print(f"[ERROR] Error inesperado al cargar datos: {e}")
             self.productos = []
             self.siguiente_id = 1
     
@@ -71,16 +71,15 @@ class ProductoService:
         except Exception as e:
             print(f"❌ Error al guardar datos: {e}")
             
-        except Exception as e:
-            print(f"❌ Error al guardar datos: {e}")
     
     def _agregar_productos_ejemplo(self):
         """Agrega algunos productos de ejemplo para demostración"""
         productos_ejemplo = [
             ("Laptop Dell", 3500000, "Tecnología", 10),
-            ("Mouse Logitech", 85000, "Tecnología", 25), 
+            ("Mouse Logitech", 850300, "Tecnología", 25), 
             ("Teclado Mecánico", 350000, "Tecnología", 15),
             ("Monitor LG", 1200000, "Tecnología", 8),
+            
         ]
         
         for nombre, precio, categoria, stock in productos_ejemplo:
@@ -104,15 +103,11 @@ class ProductoService:
             if self._existe_producto_por_nombre(nombre.strip()):
                 raise ValueError(f"Ya existe un producto con el nombre '{nombre.strip()}'")
             
-            # Limpiar y convertir precio
-            precio_limpio = str(precio).replace(',', '').replace('.', '').replace(' ', '')
-            precio_float = float(precio_limpio)
-            
-            # Crear el producto
+            # Crear el producto (el setter de precio ya limpia automáticamente)
             producto = Producto(
                 self.siguiente_id,
                 nombre.strip(),
-                precio_float,
+                precio,  # No limpiar aquí, lo hace el setter
                 categoria.strip(),
                 int(stock)
             )
@@ -174,12 +169,8 @@ class ProductoService:
             
             # Preparar datos para validación (usar valores actuales si no se proporcionan nuevos)
             nuevo_nombre = nombre.strip() if nombre else producto.nombre
-            # Limpiar precio si se proporciona uno nuevo
-            if precio is not None:
-                precio_limpio = str(precio).replace(',', '').replace('.', '').replace(' ', '')
-                nuevo_precio = float(precio_limpio)
-            else:
-                nuevo_precio = producto.precio
+            # Usar el precio tal como viene (el setter lo limpiará automáticamente)
+            nuevo_precio = precio if precio is not None else producto.precio
             nueva_categoria = categoria.strip() if categoria else producto.categoria
             nuevo_stock = stock if stock is not None else producto.stock
             

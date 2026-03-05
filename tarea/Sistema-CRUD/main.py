@@ -30,10 +30,10 @@ class MenuCRUD:
             if opcion in ['1', '2', '3', '4', '5', '6', '7']:
                 return opcion
             else:
-                print("❌ Por favor ingrese una opción válida (1-7)")
+                print("[X] Por favor ingrese una opción válida (1-7)")
                 return None
         except Exception as e:
-            print(f"❌ Error al leer la opción: {e}")
+            print(f"[X] Error al leer la opción: {e}")
             return None
     
     def crear_producto_menu(self):
@@ -42,12 +42,13 @@ class MenuCRUD:
         try:
             nombre = input("Nombre del producto: ").strip()
             if not nombre:
-                print("❌ El nombre no puede estar vacío")
+                print("[X] El nombre no puede estar vacío")
                 return
             
-            print("💰 Ingrese el precio en pesos colombianos (COP)")
+            print("[DINERO] Ingrese el precio en pesos colombianos (COP)")
             print("   Rango válido: $1.000 - $45.000.000")
-            print("   Ejemplos: 15000, 250000, 1500000")
+            print("   Ejemplos: 15000, 250000, 1500000, 20.000, 25.000")
+            print("   Nota: Use punto (.) como separador de miles o ingrese el número completo")
             precio = input("Precio del producto (COP): ").strip()
             categoria = input("Categoría del producto: ").strip()
             stock = input("Stock del producto: ").strip()
@@ -105,7 +106,8 @@ class MenuCRUD:
             
             # Obtener nuevos valores
             nombre = input(f"Nuevo nombre ({producto_actual.nombre}): ").strip()
-            precio_input = input(f"Nuevo precio en COP ({producto_actual.precio:,.0f}): ").strip()
+            precio_formateado_actual = f"{producto_actual.precio:,.0f}".replace(',', '.')
+            precio_input = input(f"Nuevo precio en COP (${precio_formateado_actual}): ").strip()
             categoria = input(f"Nueva categoría ({producto_actual.categoria}): ").strip()
             stock_input = input(f"Nuevo stock ({producto_actual.stock}): ").strip()
             

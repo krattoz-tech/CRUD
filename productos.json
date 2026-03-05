@@ -4,28 +4,28 @@
         {
             "id_producto": 1,
             "nombre": "Laptop Dell",
-            "precio": 3500000,
+            "precio": 3500000.0,
             "categoria": "Tecnología",
             "stock": 10
         },
         {
             "id_producto": 2,
             "nombre": "Mouse Logitech",
-            "precio": 85000,
+            "precio": 850300.0,
             "categoria": "Tecnología",
             "stock": 25
         },
         {
             "id_producto": 3,
             "nombre": "Teclado Mecánico",
-            "precio": 350000,
+            "precio": 350000.0,
             "categoria": "Tecnología",
             "stock": 15
         },
         {
             "id_producto": 4,
             "nombre": "Monitor Lg",
-            "precio": 1200000,
+            "precio": 1200000.0,
             "categoria": "Tecnología",
             "stock": 8
         }
